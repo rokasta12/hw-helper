@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "name": "hwhelper",
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "index.js"
+    }
+  ],
+  "alias": ["hwhelper"]
+}
