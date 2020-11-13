@@ -39,12 +39,12 @@
 
     <main id="app">
       <form @submit.prevent="createUrl()">
-        <div v-if="error" class="alert alert-dismissible alert-danger">
-          <strong>{{error}}</strong>
-        </div>
         <div class="container py-4 my-4">
           <div class="row">
             <div class="col">
+              <div v-if="error" class="alert alert-dismissible alert-danger">
+                <strong>{{error}}</strong>
+              </div>
               <h1 class="text-center text-justify">Ask Your Question</h1>
 
               <div class="input-group input-group-lg mb-3">
@@ -66,7 +66,7 @@
           </div>
         </div>
       </form>
-      <div class="container" v-if="created">
+      <div class="container px-2 my-2 py-2" v-if="created">
         <p>Your short url is: <a :href="created">{{created}}</a></p>
       </div>
       >
