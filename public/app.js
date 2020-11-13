@@ -3,12 +3,10 @@ const app = new Vue({
   data: {
     url: "",
     error: "",
-
     created: null,
   },
   methods: {
     async createUrl() {
-      console.log(this.url);
       const response = await fetch("/url", {
         method: "POST",
         headers: {

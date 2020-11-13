@@ -51,13 +51,13 @@ const linkSchema = yup.object().shape({
 });
 
 const slowerDownLimiter = slowDown({
-  windowMs: 60 * 1000,
-  delayAfter: 1,
+  windowMs: 30 * 1000,
+  delayAfter: 3,
   delayMs: 500,
 });
 
 const rateLimiter = rateLimit({
-  windowMs: 60 * 1000,
+  windowMs: 30 * 1000,
   max: 3,
 });
 
@@ -68,22 +68,26 @@ app.post("/url", slowerDownLimiter, rateLimiter, async (req, res, next) => {
 
   try {
     await linkSchema.validate(slug, url);
-
-    if (!slug) {
-      slug = nanoid(5);
+    const existingUrl = await urls.findOne({ url });
+    if (existingUrl) {
+      res.json(existingUrl);
     } else {
-      const existing = await urls.findOne({ slug });
-      if (existing) {
-        throw new Error("slug in use ");
+      if (!slug) {
+        slug = nanoid(5);
+      } else {
+        const existing = await urls.findOne({ slug });
+        if (existing) {
+          throw new Error("slug in use ");
+        }
       }
+      slug = slug.toLowerCase();
+      const newUrl = {
+        url,
+        slug,
+      };
+      const created = await urls.insert(newUrl);
+      res.json(created);
     }
-    slug = slug.toLowerCase();
-    const newUrl = {
-      url,
-      slug,
-    };
-    const created = await urls.insert(newUrl);
-    res.json(created);
   } catch (error) {
     next(error);
   }
