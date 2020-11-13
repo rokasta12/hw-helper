@@ -51,14 +51,14 @@ const linkSchema = yup.object().shape({
 });
 
 const slowerDownLimiter = slowDown({
-  windowMs: 30 * 1000,
+  windowMs: 60 * 1000,
   delayAfter: 1,
   delayMs: 500,
 });
 
 const rateLimiter = rateLimit({
-  windowMs: 30 * 1000,
-  max: 1,
+  windowMs: 60 * 1000,
+  max: 3,
 });
 
 // create a shory url
