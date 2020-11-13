@@ -47,7 +47,7 @@ const linkSchema = yup.object().shape({
     .string()
     .trim()
     .matches(/^[\w\-]+$/i),
-  url: yup.string().trim().url().required(),
+  url: yup.string().trim().url(),
 });
 
 const slowerDownLimiter = slowDown({
